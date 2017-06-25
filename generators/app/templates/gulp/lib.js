@@ -1,19 +1,18 @@
 const exec = require('child_process').exec;
 
-module.exports = {};
+exp = module.exports;
 
-module.exports.exec = cmd => {
-  const deco = new Array(cmd.length + 4).join('=');
-  console.log(`+ ${cmd}`);
-  console.log(deco);
+exp.exec = (cmd, callback) => {
+  exp.decho(cmd);
   exec(cmd, (err, stdout, stderr) => {
     stdout && console.log(stdout);
     stderr && console.log(stderr);
     err && console.log(err);
+    callback && callback();
   });
 };
 
-module.exports.decho = cmd => {
+exp.decho = cmd => {
   const deco = new Array(cmd.length + 4).join('=');
   console.log(`+ ${cmd}`);
   console.log(deco);

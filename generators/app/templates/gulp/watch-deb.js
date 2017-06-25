@@ -12,8 +12,9 @@ gulp.task(taskName, () => {
   ], event => {
     if (event.type == 'added' || event.type == 'changed') {
       const cmd = `docker-compose exec ${cfg.serviceName} install-deb`;
-      lib.exec(cmd);
-      lib.decho(`End ${taskName}`);
+      lib.exec(cmd, () => {
+        lib.decho(`End ${taskName}`);
+      });
     }
   });
 });
