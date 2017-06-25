@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+mkdir -p /installed
+cd `dirname $0`/../..
+touch deb.txt deb.dev.txt /installed/deb.txt /installed/deb.dev.txt
+(diff -wB /installed/deb.txt deb.txt > /dev/null && \
+ diff -wB /installed/deb.dev.txt deb.dev.txt > /dev/null) && \
+ decho "Not Change" || \
+ cat deb.txt deb.dev.txt | remove-comment | xargs apt-get install -y
+cp deb.txt deb.dev.txt /installed

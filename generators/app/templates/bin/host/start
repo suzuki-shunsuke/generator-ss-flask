@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+cd `dirname $0`
+
+../both/deco-exec docker-compose up -d
+../both/deco-exec docker-compose exec app start

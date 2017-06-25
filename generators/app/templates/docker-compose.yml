@@ -1,0 +1,14 @@
+version: '3'
+services:
+  app:
+    image: <%= docker_image %>
+    ports:
+    - "<%= host_port %>:5000"
+    volumes:
+    - .:/workspace
+    env_file:
+    - env_file/common
+    - env_file/dev
+    command: ["bash"]
+    stdin_open: true
+    tty: true

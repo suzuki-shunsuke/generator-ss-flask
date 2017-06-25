@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+which pip-sync > /dev/null || pip install pip-tools
+mkdir -p /installed
+touch /installed/requirements.txt /installed/requirements.dev.txt
+cd `dirname $0`/../..
+test -f requirements.txt || pip-compile requirements.in
+test -f requirements.dev.txt || pip-compile requirements.dev.in
+(diff -wB /installed/requirements.txt requirements.txt > /dev/null && \
+ diff -wB /installed/requirements.dev.txt requirements.dev.txt > /dev/null) && decho "Not change" || \
+ deco-exec pip-sync requirements.txt requirements.dev.txt
+cp requirements.dev.txt requirements.txt /installed/
